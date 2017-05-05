@@ -5,7 +5,7 @@
 #include <uuid/uuid.h>
 
 #ifndef DM_UUID_DEBUG
-#define DM_UUID_DEBUG 1
+#define DM_UUID_DEBUG 0
 #endif
 
 #ifndef DM_UUID_GEN_NORMAL
