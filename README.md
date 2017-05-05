@@ -20,8 +20,8 @@ Nginx uuid module based on libuuid.
 # Config nginx.conf
 
 ```c
-    location /uuid {
-        dm_gen_uuid normal;
-    }
+location /uuid {
+    dm_gen_uuid normal;
+}
 ```
 
