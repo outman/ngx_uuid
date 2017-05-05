@@ -81,7 +81,7 @@ static ngx_int_t ngx_http_dm_uuid_handler(ngx_http_request_t *r)
     ngx_buf_t   *b;
     ngx_chain_t  out;
     ngx_http_dm_uuid_loc_conf_t* local_conf;
-    u_char dm_uuid_string[1024] = {0};
+    u_char dm_uuid_string[32] = {0};
     ngx_uint_t content_length = 0;
 
     local_conf = ngx_http_get_module_loc_conf(r, ngx_http_dm_uuid_module);
@@ -99,6 +99,8 @@ static ngx_int_t ngx_http_dm_uuid_handler(ngx_http_request_t *r)
         uuid_generate(uuid_buf);
     }
     uuid_unparse(uuid_buf, (char *) dm_uuid_string);
+    uuid_clear(uuid_buf);
+
     if (DM_UUID_DEBUG) {
         ngx_log_error(NGX_LOG_EMERG, r->connection->log, 0, "dm_gen_uuid: %s", dm_uuid_string);
     }
