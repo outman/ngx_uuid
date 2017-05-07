@@ -110,6 +110,7 @@ static ngx_int_t ngx_http_dm_uuid_handler(ngx_http_request_t *r)
         return NGX_HTTP_NOT_ALLOWED;
     }
 
+    /* discard client request body */
     rc = ngx_http_discard_request_body(r);
 
     if (rc != NGX_OK) {
@@ -171,11 +172,7 @@ static void *ngx_http_dm_uuid_create_loc_conf(ngx_conf_t *cf)
 
 static char *ngx_http_dm_gen_uuid(ngx_conf_t *cf, ngx_command_t *cmd, void *conf)
 {
-
-    ngx_http_dm_uuid_loc_conf_t* local_conf;
-    local_conf = conf;
     char* rv = ngx_conf_set_str_slot(cf, cmd, conf);
-
     return rv;
 }
 
