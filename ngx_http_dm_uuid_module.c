@@ -28,10 +28,10 @@ static ngx_int_t ngx_http_dm_uuid_init(ngx_conf_t *cf);
 /* module create location conf callback function */
 static void *ngx_http_dm_uuid_create_loc_conf(ngx_conf_t *cf);
 
-/* gen uuid function */
+/* module's configuration */
 static char *ngx_http_dm_gen_uuid(ngx_conf_t *cf, ngx_command_t *cmd, void *conf);
 
-/* module commands list */
+/* module's commands config */
 static ngx_command_t ngx_http_dm_uuid_commands[] = {
     {
         ngx_string("dm_gen_uuid"),
@@ -72,6 +72,7 @@ ngx_module_t ngx_http_dm_uuid_module = {
     NGX_MODULE_V1_PADDING
 };
 
+/** module's handler **/
 static ngx_int_t ngx_http_dm_uuid_handler(ngx_http_request_t *r)
 {
     ngx_int_t    rc;
@@ -95,6 +96,7 @@ static ngx_int_t ngx_http_dm_uuid_handler(ngx_http_request_t *r)
     } else {
         uuid_generate(uuid_buf);
     }
+
     uuid_unparse(uuid_buf, (char *) dm_uuid_string);
     uuid_clear(uuid_buf);
 
