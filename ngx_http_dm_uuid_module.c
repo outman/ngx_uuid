@@ -1,12 +1,9 @@
 #include <ngx_config.h>
 #include <ngx_core.h>
 #include <ngx_http.h>
+#include <ngx_log.h>
 
 #include <uuid/uuid.h>
-
-#ifndef DM_UUID_DEBUG
-#define DM_UUID_DEBUG 0
-#endif
 
 #ifndef DM_UUID_GEN_NORMAL
 #define DM_UUID_GEN_NORMAL "normal"
@@ -86,7 +83,7 @@ static ngx_int_t ngx_http_dm_uuid_handler(ngx_http_request_t *r)
 
     local_conf = ngx_http_get_module_loc_conf(r, ngx_http_dm_uuid_module);
     if (local_conf->dm_gen_uuid.len == 0 ) {
-        ngx_log_error(NGX_LOG_EMERG, r->connection->log, 0, "dm_gen_uuid empty");    
+        ngx_log_debug0(NGX_LOG_DEBUG_CORE, r->connection->log, 0, "dm_get_uuid_empty");
         return NGX_DECLINED;
     }
 
@@ -101,9 +98,8 @@ static ngx_int_t ngx_http_dm_uuid_handler(ngx_http_request_t *r)
     uuid_unparse(uuid_buf, (char *) dm_uuid_string);
     uuid_clear(uuid_buf);
 
-    if (DM_UUID_DEBUG) {
-        ngx_log_error(NGX_LOG_EMERG, r->connection->log, 0, "dm_gen_uuid: %s", dm_uuid_string);
-    }
+    ngx_log_debug1(NGX_LOG_DEBUG_CORE, r->connection->log, 0, "dm_gen_uuid %s", dm_uuid_string);
+
     content_length = ngx_strlen(dm_uuid_string);
 
     if (!(r->method & (NGX_HTTP_GET|NGX_HTTP_HEAD))) {
